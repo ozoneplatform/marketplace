@@ -4,28 +4,28 @@ import org.springframework.stereotype.Component
 
 import marketplace.hal.ApplicationRootUriBuilderHolder
 
-import marketplace.rest.resource.IwcResource
+import marketplace.rest.resource.RootResource
 
 import marketplace.rest.IwcApi
 
 //TODO is this class redundant with IwcUriBuilder
-class IwcResourceUriBuilder implements CollectionUriBuilder<IwcApi> {
+class RootResourceUriBuilder implements CollectionUriBuilder<IwcApi> {
     private ApplicationRootUriBuilderHolder uriBuilderHolder
 
-    private IwcResourceUriBuilder(ApplicationRootUriBuilderHolder uriBuilderHolder) {
+    private RootResourceUriBuilder(ApplicationRootUriBuilderHolder uriBuilderHolder) {
         this.uriBuilderHolder = uriBuilderHolder
     }
 
     URI getCollectionUri() {
         uriBuilderHolder.builder
-            .path(IwcResource.class)
+            .path(RootResource.class)
             .build()
     }
 
     @Component
     public static class Factory implements CollectionUriBuilder.Factory {
-        IwcResourceUriBuilder getBuilder(ApplicationRootUriBuilderHolder uriBuilderHolder) {
-            new IwcResourceUriBuilder(uriBuilderHolder)
+        RootResourceUriBuilder getBuilder(ApplicationRootUriBuilderHolder uriBuilderHolder) {
+            new RootResourceUriBuilder(uriBuilderHolder)
         }
     }
 }

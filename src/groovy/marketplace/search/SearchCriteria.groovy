@@ -13,6 +13,11 @@ class SearchCriteria {
 
     final static ALLOWED_SORT = ['title', 'avgRate', 'score', 'approvedDate']
 
+    //multiple values of filters specified here are combined using UNION.  Filters not
+    //specified here are combined using INTERSECTION.  Filters of different types are always
+    //combined using INTERSECTION
+    final static UNION_FILTERS = ['type.title', 'agency.title']
+
     Map<String, List<String>> filters = new HashMap<String, List<String>>()
     List<String> fields = ['title', 'description', 'descriptionShort', 'whatIsNew', 'requirements', 'tags']
     String order = 'DESC'

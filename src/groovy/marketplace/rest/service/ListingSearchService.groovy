@@ -82,30 +82,34 @@ class ListingSearchService {
      */
     private static FilterBuilder getFilterBuilder(SearchCriteria searchCriteria) {
         def boolFilterBuilder = FilterBuilders.boolFilter()
+
         searchCriteria.filters.each { String field, List values ->
+            Collection<FilterBuilder> fieldFilters
+            def filterCombinationMethod = searchCriteria.UNION_FILTERS.contains(field) ?
+                    FilterBuilders.&orFilter : FilterBuilders.&andFilter
+
             if(field.contains(".")) {
                 String nestedPath = field.split("\\.")[0]
-                values.each { String value ->
-                    boolFilterBuilder.must(
-                        FilterBuilders.nestedFilter(
-                            nestedPath,
-                            QueryBuilders
-                                .queryString("\"$value\"")
-                                .defaultField(field)
-                        )
+
+                fieldFilters = values.collect { String value ->
+                    FilterBuilders.nestedFilter(
+                        nestedPath,
+                        QueryBuilders
+                            .queryString("\"$value\"")
+                            .defaultField(field)
                     )
                 }
             } else {
-                values.each { String value ->
-                    boolFilterBuilder.must(
-                        FilterBuilders.queryFilter(
-                            QueryBuilders
-                                .queryString("\"$value\"")
-                                .defaultField(field)
-                        )
+                fieldFilters = values.collect { String value ->
+                    FilterBuilders.queryFilter(
+                        QueryBuilders
+                            .queryString("\"$value\"")
+                            .defaultField(field)
                     )
                 }
             }
+
+            boolFilterBuilder.must(filterCombinationMethod(fieldFilters as FilterBuilder[]))
         }
 
         boolFilterBuilder

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.transaction.annotation.Propagation
 
 import org.hibernate.SQLQuery
 import org.hibernate.transform.AliasToEntityMapResultTransformer
@@ -78,6 +79,43 @@ class ListingRestService extends RestService<Listing> {
 
             ne('id', id)
         }.grep{ canView(it) }
+    }
+
+    @Transactional(readOnly=true)
+    public List<Listing> getFeatured(Integer max) {
+        Listing.createCriteria().list() {
+            eq('isFeatured', true)
+            eq('isEnabled', true)
+            eq('approvalStatus', ApprovalStatus.APPROVED)
+
+            if (max) maxResults(max)
+            order('avgRate', 'desc')
+            order('title', 'asc')
+        }
+    }
+
+    @Transactional(readOnly=true)
+    public List<Listing> getRecent(Integer max) {
+        Listing.createCriteria().list() {
+            eq('isEnabled', true)
+            eq('approvalStatus', ApprovalStatus.APPROVED)
+
+            if (max) maxResults(max)
+            order('approvedDate', 'desc')
+            order('title', 'asc')
+        }
+    }
+
+    @Transactional(readOnly=true)
+    public List<Listing> getMostPopular(Integer max) {
+        Listing.createCriteria().list() {
+            eq('isEnabled', true)
+            eq('approvalStatus', ApprovalStatus.APPROVED)
+
+            if (max) maxResults(max)
+            order('avgRate', 'desc')
+            order('title', 'asc')
+        }
     }
 
     /**

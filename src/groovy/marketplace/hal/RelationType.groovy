@@ -169,7 +169,10 @@ enum OzpRelationType implements HalCuriedRelationType {
     REVIEW('review'),
     ACTIVITY('activity'),
     REQUIRED('required'),
-    REQUIRED_BY('required-by')
+    REQUIRED_BY('required-by'),
+    CATEGORY('category'),
+    TYPE('type'),
+    CONTACT_TYPE('contact-type')
 
     private String name
 

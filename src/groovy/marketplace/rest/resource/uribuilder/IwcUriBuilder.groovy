@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 
 import marketplace.hal.ApplicationRootUriBuilderHolder
 
-import marketplace.rest.resource.IwcResource
+import marketplace.rest.resource.RootResource
 import marketplace.rest.resource.IwcSystemResource
 
 import marketplace.rest.IwcApi
@@ -18,7 +18,7 @@ class IwcUriBuilder implements CollectionUriBuilder<IwcApi> {
 
     URI getCollectionUri() {
         uriBuilderHolder.builder
-            .path(IwcResource.class)
+            .path(RootResource.class)
             .build()
     }
 
