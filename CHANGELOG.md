@@ -1,3 +1,16 @@
+### 0.7.3 (2015-03-31)
+
+
+#### Features
+
+* **REST efficiency:**
+  * #45 Create efficient REST calls for UI load ([20ce34a5](https://github.com/ozone-development/ozp-rest/commit/20ce34a52809459ae796445f9e67b50756d414db))
+  * #45 use db instead of elasticsearch for storefront ([ad0ebfe4](https://github.com/ozone-development/ozp-rest/commit/ad0ebfe40b6b383bafd0995165024220057cc83b))
+  * #45 consolidate search calls for initial UI page ([9ecfac29](https://github.com/ozone-development/ozp-rest/commit/9ecfac2935de9f73bb8006d118436cdee00c3afa))
+* **REST metadata:** center-ui #45 Create a single REST call for retrieving categories, types, etc ([76ff8148](https://github.com/ozone-development/ozp-rest/commit/76ff814898aaa118293ceb08141649d311e3e466))
+* **Search:** Combine Type and Agency filters via UNION ([3cddb173](https://github.com/ozone-development/ozp-rest/commit/3cddb173d6a946b1405ccaab7f8492230f855582))
+
+
 ### 0.7.2 (2015-03-23)
 
 
