@@ -1,3 +1,11 @@
+### 0.7.4 (2015-04-14)
+
+
+#### Bug Fixes
+
+* **Image Server:** imageUriBaseOverride paths should match image directory structure #58 ([5c5d1599](https://github.com/ozone-development/ozp-rest/commit/5c5d159942a7f56ca28b84c02edb1469e4712bc3))
+
+
 ### 0.7.3 (2015-03-31)
 
 
