@@ -203,10 +203,10 @@ class ImageRestService {
     }
 
     public Path getRelativePath(ImageReference imageRef) {
-      String fileName = getFileBaseName(imageRef.id), folderName = getFolder(imageRef.id),
-          extension = getFileExtension(imageRef)
+        String fileName = getFileBaseName(imageRef.id), folderName = getFolder(imageRef.id),
+            extension = getFileExtension(imageRef)
 
-      Paths.get(folderName, "$fileName.$extension")
+        Paths.get(folderName, "$fileName.$extension")
     }
 
     private Path getPath(ImageReference imageRef) {
