@@ -6,4 +6,10 @@ package marketplace.rest
  */
 class LegacyPreference {
     String namespace, name, value
+
+    LegacyPreference(String namespace, String name, String value) {
+    	this.namespace = namespace
+    	this.name = name
+    	this.value = value
+    }
 }
