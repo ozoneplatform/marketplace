@@ -7,6 +7,8 @@ import javax.servlet.FilterChain
 import javax.servlet.FilterConfig
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletRequestWrapper
+import javax.servlet.http.HttpServletResponse
+import javax.servlet.ServletInputStream
 
 class LegacyHTTPMethodServletFilter implements Filter {
     private static final String METHOD_PARAM_KEY = '_method'
@@ -16,12 +18,35 @@ class LegacyHTTPMethodServletFilter implements Filter {
      * a _method form parameter
      */
     private static class LegacyHTTPMethodServletRequest extends HttpServletRequestWrapper {
+
         final String method
+        private final byte[] payload
 
-        LegacyHTTPMethodServletRequest(HttpServletRequest request) {
+        LegacyHTTPMethodServletRequest(HttpServletRequest request) throws Exception {
             super(request)
-
             this.method = getLegacyHTTPMethod(request)
+            this.payload = request.getInputStream().bytes
+        }
+
+        @Override
+        public ServletInputStream getInputStream () throws IOException {
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(payload);
+
+            ServletInputStream inputStream = new ServletInputStream() {
+                public int read () 
+                    throws IOException {
+                    return byteArrayInputStream.read();
+                }
+            };
+            return inputStream
+        }
+
+        @Override
+        public BufferedReader getReader() throws IOException {
+            InputStream sourceStream = this.getInputStream()
+            Reader sourceReader = (this.characterEncoding != null) ?
+                new InputStreamReader(sourceStream, this.characterEncoding) : new InputStreamReader(sourceStream)
+            return new BufferedReader(sourceReader)
         }
     }
 
@@ -41,6 +66,7 @@ class LegacyHTTPMethodServletFilter implements Filter {
 
     void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) {
-        filterChain.doFilter(new LegacyHTTPMethodServletRequest(request), response)
+
+        filterChain.doFilter(new LegacyHTTPMethodServletRequest(request), (HttpServletResponse) response)
     }
 }
