@@ -1,3 +1,11 @@
+### 0.7.5 (2015-04-28)
+
+
+#### Bug Fixes
+
+* **Screenshot:** #205 in center, fix validation of screen shots to only apply if the listing is b ([8e9dd853](https://github.com/ozone-development/ozp-rest/commit/8e9dd8534684fc66dbb7b5b70cc2e290578f8e97))
+
+
 ### 0.7.4 (2015-04-14)
 
 
