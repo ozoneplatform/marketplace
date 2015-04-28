@@ -32,14 +32,14 @@ class LegacyResource {
             @PathParam('namespace') String namespace,
             @PathParam('name') String name,
             @FormParam('value') String value) {
-        //TODO real impl
-        Profile currentUser = profileRestService.getCurrentUser()
-        Long userId = currentUser.get(id)
-        String key = namespace + 0x1E + name;
 
-        // updateDataItem(Long userId, String key, String entity, String contentType)
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+        String key = namespace + (char) 0x1E + name
+
         profileRestService.updateDataItem(userId, key, value, 'application/json')
 
-        new LegacyPreference(namespace: namespace, name: name, value: value)
+        new LegacyPreference(namespace, name, value)
     }
+
 }
