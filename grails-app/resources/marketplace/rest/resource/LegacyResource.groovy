@@ -7,7 +7,9 @@ import javax.ws.rs.Produces
 import javax.ws.rs.Consumes
 import javax.ws.rs.PUT
 import javax.ws.rs.GET
+import javax.ws.rs.DELETE
 import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
 
 import marketplace.rest.LegacyPreference
 import marketplace.IwcDataObject
@@ -40,8 +42,7 @@ class LegacyResource {
             @PathParam('name') String name,
             @FormParam('value') String value) {
 
-        Profile currentUser = profileRestService.getCurrentUserProfile()
-        Long userId = currentUser.id
+        Long userId = profileRestService.getCurrentUserProfile().id
         String key = namespace + (char) 0x1E + name
 
         profileRestService.updateDataItem(userId, key, value, 'application/json')
@@ -58,14 +59,28 @@ class LegacyResource {
         @PathParam('namespace') String namespace,
         @PathParam('name') String name) {
 
-        Profile currentUser = profileRestService.getCurrentUserProfile()
-        Long userId = currentUser.id
+        Long userId = profileRestService.getCurrentUserProfile().id
         String key = namespace + (char) 0x1E + name
 
         IwcDataObject data = profileRestService.getDataItem(userId, key)
 
         new LegacyPreference(namespace, name, data.entity)
 
+    }
+
+    @Path('/preference/{namespace}/{name}')
+    @DELETE
+    @Produces([])
+    Response deletePreference(
+        @PathParam('namespace') String namespace,
+        @PathParam('name') String name) {
+
+        Long userId = profileRestService.getCurrentUserProfile().id
+        String key = namespace + (char) 0x1E + name
+
+        profileRestService.deleteDataItem(userId, key)
+
+        Response.noContent().build()
     }
 
 }
