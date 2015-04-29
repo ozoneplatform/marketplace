@@ -6,11 +6,14 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.Consumes
 import javax.ws.rs.PUT
+import javax.ws.rs.GET
 import javax.ws.rs.core.MediaType
 
 import marketplace.rest.LegacyPreference
+import marketplace.IwcDataObject
 import marketplace.Profile
 import marketplace.rest.service.ProfileRestService
+import marketplace.rest.representation.out.LegacyPreferenceRepresentation
 
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -44,6 +47,25 @@ class LegacyResource {
         profileRestService.updateDataItem(userId, key, value, 'application/json')
 
         new LegacyPreference(namespace, name, value)
+    }
+
+    @Path('/preference/{namespace}/{name}')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON
+    ])
+    public LegacyPreference getPreference(
+        @PathParam('namespace') String namespace,
+        @PathParam('name') String name) {
+
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+        String key = namespace + (char) 0x1E + name
+
+        IwcDataObject data = profileRestService.getDataItem(userId, key)
+
+        new LegacyPreference(namespace, name, data.entity)
+
     }
 
 }
