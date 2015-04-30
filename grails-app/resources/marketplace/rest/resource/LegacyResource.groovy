@@ -42,12 +42,13 @@ class LegacyResource {
             @PathParam('name') String name,
             @FormParam('value') String value) {
 
-        Long userId = profileRestService.getCurrentUserProfile().id
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
         String key = namespace + (char) 0x1E + name
 
         profileRestService.updateDataItem(userId, key, value, 'application/json')
 
-        new LegacyPreference(namespace, name, value)
+        new LegacyPreference(namespace, name, value, currentUser)
     }
 
     @Path('/preference/{namespace}/{name}')
@@ -59,28 +60,33 @@ class LegacyResource {
         @PathParam('namespace') String namespace,
         @PathParam('name') String name) {
 
-        Long userId = profileRestService.getCurrentUserProfile().id
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
         String key = namespace + (char) 0x1E + name
 
         IwcDataObject data = profileRestService.getDataItem(userId, key)
 
-        new LegacyPreference(namespace, name, data.entity)
+        new LegacyPreference(namespace, name, data.entity, currentUser)
 
     }
 
     @Path('/preference/{namespace}/{name}')
     @DELETE
-    @Produces([])
-    Response deletePreference(
+    @Produces([
+        MediaType.APPLICATION_JSON
+    ])
+    public LegacyPreference deletePreference(
         @PathParam('namespace') String namespace,
         @PathParam('name') String name) {
 
-        Long userId = profileRestService.getCurrentUserProfile().id
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
         String key = namespace + (char) 0x1E + name
 
+        IwcDataObject data = profileRestService.getDataItem(userId, key)
         profileRestService.deleteDataItem(userId, key)
 
-        Response.noContent().build()
+        new LegacyPreference(namespace, name, data.entity, currentUser)
     }
 
 }

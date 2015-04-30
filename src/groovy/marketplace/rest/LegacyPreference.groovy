@@ -1,15 +1,15 @@
 package marketplace.rest
 
-/**
- * TODO This class is currently mocked out to have a minimal impl for compilation
- * while other components are written.  It will need to be rewritten
- */
+import marketplace.Profile
+
 class LegacyPreference {
     String namespace, name, value
+    Profile user
 
-    LegacyPreference(String namespace, String name, String value) {
+    LegacyPreference(String namespace, String name, String value, Profile user) {
     	this.namespace = namespace
     	this.name = name
     	this.value = value
+    	this.user = user
     }
 }

@@ -18,6 +18,7 @@ class LegacyPreferenceRepresentation extends AbstractHalRepresentation<LegacyPre
     public String getNamespace() { legacyPreference.namespace }
     public String getName() { legacyPreference.name }
     public String getValue() { legacyPreference.value }
+    public String getUser() { legacyPreference.user.username }
 
     @Component
     public static class Factory implements RepresentationFactory<LegacyPreference> {
