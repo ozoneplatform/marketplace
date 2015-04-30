@@ -13,16 +13,3 @@ class LegacyPreference {
 		this.user = user
     }
 }
-
-class LegacyUser {
-	String currentUserName, currentUser
-	Date currentUserPrevLogin
-	Number currentId
-
-	LegacyUser(Profile user) {
-		this.currentUserName = user.username
-		this.currentUser = user.displayName
-		this.currentUserPrevLogin = user.lastLogin
-		this.currentId = user.id
-	}
-}

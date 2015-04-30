@@ -55,7 +55,8 @@ class LegacyResource {
     @Path('/preference/{namespace}/{name}')
     @GET
     @Produces([
-        MediaType.APPLICATION_JSON
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
     ])
     public LegacyPreference getPreference(
         @PathParam('namespace') String namespace,
@@ -74,7 +75,8 @@ class LegacyResource {
     @Path('/preference/{namespace}/{name}')
     @DELETE
     @Produces([
-        MediaType.APPLICATION_JSON
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
     ])
     public LegacyPreference deletePreference(
         @PathParam('namespace') String namespace,
@@ -93,7 +95,8 @@ class LegacyResource {
     @Path('/person/whoami')
     @GET
     @Produces([
-        MediaType.APPLICATION_JSON
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
     ])
     public LegacyUser getCurrentUser() {
         Profile currentUser = profileRestService.getCurrentUserProfile()
