@@ -1,6 +1,7 @@
 package marketplace.rest
 
 import marketplace.Profile
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 class LegacyPreference {
     String namespace, name, value
@@ -10,6 +11,6 @@ class LegacyPreference {
     	this.namespace = namespace
     	this.name = name
     	this.value = value
-    	this.user = user
+		this.user = user
     }
 }

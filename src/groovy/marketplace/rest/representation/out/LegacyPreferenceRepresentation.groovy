@@ -7,6 +7,7 @@ import marketplace.hal.AbstractHalRepresentation
 import marketplace.hal.RepresentationFactory
 
 import marketplace.rest.LegacyPreference
+import marketplace.Profile
 
 class LegacyPreferenceRepresentation extends AbstractHalRepresentation<LegacyPreference> {
     private LegacyPreference legacyPreference
@@ -16,9 +17,9 @@ class LegacyPreferenceRepresentation extends AbstractHalRepresentation<LegacyPre
     }
 
     public String getNamespace() { legacyPreference.namespace }
-    public String getName() { legacyPreference.name }
+    public String getPath() { legacyPreference.name }
     public String getValue() { legacyPreference.value }
-    public String getUser() { legacyPreference.user.username }
+    public UserJson getUser() { new UserJson(legacyPreference.user) }
 
     @Component
     public static class Factory implements RepresentationFactory<LegacyPreference> {
@@ -27,5 +28,15 @@ class LegacyPreferenceRepresentation extends AbstractHalRepresentation<LegacyPre
                 ApplicationRootUriBuilderHolder uriBuilderHolder) {
             new LegacyPreferenceRepresentation(legacyPreference)
         }
+    }
+
+    public static class UserJson {
+        private Profile user
+
+        UserJson(Profile user) {
+            this.user = user
+        }
+
+        public String getUserId() { user.username }
     }
 }
