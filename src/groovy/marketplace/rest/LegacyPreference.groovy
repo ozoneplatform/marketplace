@@ -1,7 +1,6 @@
 package marketplace.rest
 
 import marketplace.Profile
-import org.codehaus.groovy.grails.web.json.JSONObject
 
 class LegacyPreference {
     String namespace, name, value
@@ -13,4 +12,17 @@ class LegacyPreference {
     	this.value = value
 		this.user = user
     }
+}
+
+class LegacyUser {
+	String currentUserName, currentUser
+	Date currentUserPrevLogin
+	Number currentId
+
+	LegacyUser(Profile user) {
+		this.currentUserName = user.username
+		this.currentUser = user.displayName
+		this.currentUserPrevLogin = user.lastLogin
+		this.currentId = user.id
+	}
 }

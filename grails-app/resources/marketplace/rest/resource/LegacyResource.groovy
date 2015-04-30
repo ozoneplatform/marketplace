@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 import marketplace.rest.LegacyPreference
+import marketplace.rest.LegacyUser
 import marketplace.IwcDataObject
 import marketplace.Profile
 import marketplace.rest.service.ProfileRestService
@@ -87,6 +88,17 @@ class LegacyResource {
         profileRestService.deleteDataItem(userId, key)
 
         new LegacyPreference(namespace, name, data.entity, currentUser)
+    }
+
+    @Path('/person/whoami')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON
+    ])
+    public LegacyUser getCurrentUser() {
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+
+        new LegacyUser(currentUser)
     }
 
 }
