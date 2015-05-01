@@ -13,9 +13,14 @@ import javax.ws.rs.core.Response
 
 import marketplace.rest.LegacyPreference
 import marketplace.rest.LegacyUser
+import marketplace.rest.LegacyWidget
+
 import marketplace.IwcDataObject
 import marketplace.Profile
+import marketplace.Listing
+
 import marketplace.rest.service.ProfileRestService
+import marketplace.rest.service.ListingRestService
 import marketplace.rest.representation.out.LegacyPreferenceRepresentation
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,6 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class LegacyResource {
 
     @Autowired ProfileRestService profileRestService
+    @Autowired ListingRestService listingRestService
 
     @Path('/preference/{namespace}/{name}')
     @PUT
@@ -102,6 +108,40 @@ class LegacyResource {
         Profile currentUser = profileRestService.getCurrentUserProfile()
 
         new LegacyUser(currentUser)
+    }
+
+    // @Path('widget')
+    // @GET
+    // @Produces([
+    //     MediaType.APPLICATION_JSON,
+    //     MediaType.TEXT_HTML
+    // ])
+    // public LegacyWidget findWidgets(
+    //     @FormParam String widgetName,
+    //     @FormParam String widgetVersion,
+    //     @FormParam String widgetGuid,
+    //     @FormParam
+    //     ) {
+    // }
+
+
+    @Path('widget/listUserAndGroupWidgets')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public Collection<LegacyWidget> getAllWidgets() {
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+
+
+        Collection<LegacyWidget> list = new ArrayList<LegacyWidget>()
+        listingRestService.getAllByAuthorId(userId).each { listing ->
+            list.add(new LegacyWidget(listing))
+        }
+
+        return list
     }
 
 }
