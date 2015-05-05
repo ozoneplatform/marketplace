@@ -1301,4 +1301,6 @@ databaseChangeLog = {
         addForeignKeyConstraint(baseColumnNames: "id", baseTableName: "modify_relationship_activity", constraintName: "FKE68D3F715416850B", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "listing_activity", referencesUniqueColumn: "false")
 
     }
+
+	include file: 'notifications_and_screenshots.groovy'
 }
