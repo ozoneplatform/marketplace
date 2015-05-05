@@ -2,8 +2,8 @@
 --  Update Database Script
 --  *********************************************************************
 --  Change Log: changelog.groovy
---  Ran at: 2/18/15 1:05 PM
---  Against: root@localhost@jdbc:mysql://localhost/store
+--  Ran at: 5/5/15 9:04 AM
+--  Against: ozp@10.0.2.2@jdbc:mysql://localhost:3306/ozp
 --  Liquibase version: 2.0.5
 --  *********************************************************************
 
@@ -376,5 +376,36 @@ CREATE TABLE `modify_relationship_activity` (`id` BIGINT NOT NULL, CONSTRAINT `m
 CREATE INDEX `FKE68D3F715416850B` ON `modify_relationship_activity`(`id`);
 
 ALTER TABLE `modify_relationship_activity` ADD CONSTRAINT `FKE68D3F715416850B` FOREIGN KEY (`id`) REFERENCES `listing_activity` (`id`);
+
+CREATE INDEX `FKD032333CC0565C57` ON `profile_dismissed_notifications`(`profile_id`);
+
+ALTER TABLE `notification` MODIFY `message` VARCHAR(150) NOT NULL;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-1::clark (generated)::(Checksum: 3:969059c357aa2e949734cda5000f2750)
+
+ALTER TABLE `profile_dismissed_notifications` MODIFY `notification_id` BIGINT NOT NULL;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-2::clark (generated)::(Checksum: 3:b820fbb399cbf76472b5260769bb9e20)
+
+ALTER TABLE `profile_dismissed_notifications` MODIFY `profile_id` BIGINT NOT NULL;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-3::clark (generated)::(Checksum: 3:c7f3a69158ebe1f304052c38111afd16)
+
+ALTER TABLE `screenshot` MODIFY `small_image_id` binary(16) NULL;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-4::clark (generated)::(Checksum: 3:878cd06d9f220d61881d7d6b6de26bcc)
+
+ALTER TABLE `profile_dismissed_notifications` ADD PRIMARY KEY (`profile_id`, `notification_id`);
+--  Changeset notifications_and_screenshots.groovy::1430772568976-5::clark (generated)::(Checksum: 3:475c966d2f22fb596d007a1c8c213286)
+
+ALTER TABLE `ozp`.`relationship_listing` DROP FOREIGN KEY `FKDDEF1F7D5A4BEA77`;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-6::clark (generated)::(Checksum: 3:874d96cb5f5e18e5111ab7040d1311d7)
+
+DROP INDEX `notification_expires_date_idx` ON `notification`;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-7::clark (generated)::(Checksum: 3:fbb330fa552aad50bf6fc22cd6956b95)
+
+DROP TABLE `relationship_listing`;
+--  Changeset notifications_and_screenshots.groovy::1430772568976-8::clark (generated)::(Checksum: 3:e2445793c27061aa15568c1e610ecb70)
+
+CREATE INDEX `FKD032333CC0565C57` ON `profile_dismissed_notifications`(`profile_id`);
+--  Changeset notifications_and_screenshots.groovy::1430772568976-9::clark (generated)::(Checksum: 3:96f1fe866ad22b49556ab507f478592c)
+
+
 
 INSERT INTO `DATABASECHANGELOG` (`AUTHOR`, `COMMENTS`, `DATEEXECUTED`, `DESCRIPTION`, `EXECTYPE`, `FILENAME`, `ID`, `LIQUIBASE`, `MD5SUM`, `ORDEREXECUTED`) VALUES ('ozp-rest', '', NOW(), 'Create Table, Create Index (x3), Add Foreign Key Constraint (x2), Create Table, Create Index (x3), Add Foreign Key Constraint (x2), Create Table, Add Foreign Key Constraint (x2), Create Table, Create Index (x3), Add Foreign Key Constraint (x2), Create ...', 'EXECUTED', 'changelog.groovy', 'ozp-rest-0.1.0-1', '2.0.5', '3:1b55e92750620a44677e226bcd9359b5', 1);
