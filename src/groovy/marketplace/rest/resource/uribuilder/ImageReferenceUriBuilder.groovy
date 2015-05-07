@@ -30,17 +30,19 @@ class ImageReferenceUriBuilder {
     URI getImageUri(ImageReference imageRef) {
         String imageUriBase = grailsApplication.config.marketplace.imageUriBaseOverride
 
-        buildUri(
-            imageUriBase ? UriBuilder.fromUri(imageUriBase) : uriBuilderHolder.builder,
-            imageRef
-        )
-
+        imageUriBase ? buildUriWithOverride(UriBuilder.fromUri(imageUriBase), imageRef)
+          : buildUri(uriBuilderHolder.builder, imageRef)
     }
 
     //TODO This is a bit of a hack, since it requires reaching into the service layer and
     //ultimately the file system.  Perhaps figure out a better way some day
     URI getImageUri(UUID id) {
         getImageUri(imageRestService.getImageReference(id))
+    }
+
+    private URI buildUriWithOverride(UriBuilder base, ImageReference imageRef) {
+        base.path(imageRestService.getRelativePath(imageRef).toString())
+            .build()
     }
 
     private URI buildUri(UriBuilder base, ImageReference imageRef) {

@@ -5,6 +5,8 @@ import org.apache.commons.lang.builder.EqualsBuilder
 import org.apache.commons.lang.builder.HashCodeBuilder
 import org.codehaus.groovy.grails.web.json.JSONObject
 
+import marketplace.Listing
+
 import marketplace.converter.UUIDConverter
 
 /**
@@ -28,8 +30,8 @@ class Screenshot implements Serializable {
     UUID smallImageId
 
     static constraints = {
-        smallImageId nullable: false
-        largeImageId nullable: true
+        smallImageId nullable: true, validator: requiredUnlessInProgress
+        largeImageId nullable: true, validator: requiredUnlessInProgress
     }
 
     static mapping = {
@@ -39,6 +41,18 @@ class Screenshot implements Serializable {
 
     public UUID getLargeImageId() {
         this.largeImageId ? this.largeImageId : this.smallImageId
+    }
+
+
+
+    //A closure to use to validate that properties are present on a listing
+    //that is in any approvalStatus other than IN_PROGRESS
+    static requiredUnlessInProgress = { val, Screenshot screenshot ->
+        (screenshot.serviceItem.approvalStatus != ApprovalStatus.IN_PROGRESS &&     //reject if not draft
+            (val == null ||                                          //and val is null
+                (val.respondsTo('size') && val.size() == 0)          //or empty/blank
+            )
+        ) ? "requiredUnlessInProgress" : true
     }
 
     @Override

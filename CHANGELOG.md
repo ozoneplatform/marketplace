@@ -1,3 +1,56 @@
+### 0.7.7 (2015-05-05)
+
+
+### 0.7.6 (2015-05-05)
+
+
+### 0.7.5 (2015-04-28)
+
+
+#### Bug Fixes
+
+* **Screenshot:** #205 in center, fix validation of screen shots to only apply if the listing is b ([8e9dd853](https://github.com/ozone-development/ozp-rest/commit/8e9dd8534684fc66dbb7b5b70cc2e290578f8e97))
+
+
+### 0.7.4 (2015-04-14)
+
+
+#### Bug Fixes
+
+* **Image Server:** imageUriBaseOverride paths should match image directory structure #58 ([5c5d1599](https://github.com/ozone-development/ozp-rest/commit/5c5d159942a7f56ca28b84c02edb1469e4712bc3))
+
+
+### 0.7.3 (2015-03-31)
+
+
+#### Features
+
+* **REST efficiency:**
+  * #45 Create efficient REST calls for UI load ([20ce34a5](https://github.com/ozone-development/ozp-rest/commit/20ce34a52809459ae796445f9e67b50756d414db))
+  * #45 use db instead of elasticsearch for storefront ([ad0ebfe4](https://github.com/ozone-development/ozp-rest/commit/ad0ebfe40b6b383bafd0995165024220057cc83b))
+  * #45 consolidate search calls for initial UI page ([9ecfac29](https://github.com/ozone-development/ozp-rest/commit/9ecfac2935de9f73bb8006d118436cdee00c3afa))
+* **REST metadata:** center-ui #45 Create a single REST call for retrieving categories, types, etc ([76ff8148](https://github.com/ozone-development/ozp-rest/commit/76ff814898aaa118293ceb08141649d311e3e466))
+* **Search:** Combine Type and Agency filters via UNION ([3cddb173](https://github.com/ozone-development/ozp-rest/commit/3cddb173d6a946b1405ccaab7f8492230f855582))
+
+
+### 0.7.2 (2015-03-23)
+
+
+#### Bug Fixes
+
+* **Notifications:** fix next link for /notification/expired ([ddd2a8ba](https://github.com/ozone-development/ozp-rest/commit/ddd2a8ba2e82037701d2ea546c4c13dc18192ffb))
+* **search:** remove notifications from elasticsearch index ([7e7888a4](https://github.com/ozone-development/ozp-rest/commit/7e7888a430ea297ba9fc8f0a9fe978247456f06d))
+* **styling:** added new graphics for demo apps ([89239fad](https://github.com/ozone-development/ozp-rest/commit/89239fad4fa71a13758dcc0e675de3c7a5ba2980))
+
+
+#### Features
+
+* **Profile Search:**
+  * Search for profiles by username ([cf0838a6](https://github.com/ozone-development/ozp-rest/commit/cf0838a687e560ae477e98dc71afd9ec7000cf5c))
+  * Switch to search by username ([78cd56aa](https://github.com/ozone-development/ozp-rest/commit/78cd56aa43352a6ad08fb5df3599840d48d07228))
+  * query param for finding profiles starting with a string ([20cc884e](https://github.com/ozone-development/ozp-rest/commit/20cc884e7b6371a963243b14f3740e57bf545ea9))
+
+
 ### 0.7.1 (2015-02-18)
 
 
