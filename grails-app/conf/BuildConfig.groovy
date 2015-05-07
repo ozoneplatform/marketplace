@@ -58,7 +58,7 @@ grails.project.dependency.resolution = {
         grailsPlugins()
         grailsHome()
         mavenLocal()
-        mavenRepo 'https://www.owfgoss.org/nexus/content/groups/public'
+        mavenRepo 'http://maven.restlet.org'
         grailsCentral()
         mavenCentral()
     }
@@ -100,10 +100,10 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
+        compile 'org.ozoneplatform:ozone-auditing:1.2.1'
         compile ':database-migration:1.4.0'
         compile ':quartz:1.0.1'
         compile ':cache:1.1.5'
-        compile 'org.ozoneplatform:ozone-auditing:1.2.1'
         compile ':elasticsearch:0.0.3.7'
         compile ':audit-trail:2.0.2'
         compile ':hibernate:3.6.10.12'
