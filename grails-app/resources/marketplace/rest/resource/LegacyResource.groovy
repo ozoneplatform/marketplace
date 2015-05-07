@@ -2,6 +2,7 @@ package marketplace.rest.resource
 
 import javax.ws.rs.PathParam
 import javax.ws.rs.FormParam
+import javax.ws.rs.QueryParam
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.Consumes
@@ -110,19 +111,47 @@ class LegacyResource {
         new LegacyUser(currentUser)
     }
 
-    // @Path('widget')
-    // @GET
-    // @Produces([
-    //     MediaType.APPLICATION_JSON,
-    //     MediaType.TEXT_HTML
-    // ])
-    // public LegacyWidget findWidgets(
-    //     @FormParam String widgetName,
-    //     @FormParam String widgetVersion,
-    //     @FormParam String widgetGuid,
-    //     @FormParam
-    //     ) {
-    // }
+    @Path('widget')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public Collection<LegacyWidget> findWidgets(
+        @QueryParam('widgetName') String widgetName,
+        @QueryParam('widgetVersion') String widgetVersion,
+        @QueryParam('widgetGuid') String widgetGuid
+    ) {
+        Collection<LegacyWidget> list = new ArrayList<LegacyWidget>()
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+
+        if (widgetName || widgetVersion || widgetGuid) {
+            Collection<Listing> listings = Listing.createCriteria().list() {
+                if (widgetName) {
+                    eq('title', widgetName)
+                }
+                if (widgetVersion) {
+                    eq('versionName', widgetVersion)
+                }
+                if (widgetGuid) {
+                    eq('uuid', widgetGuid)
+                }
+                owners {
+                    eq('id', userId)
+                }
+            }
+
+            listings.each { listing -> 
+                list.add(new LegacyWidget(listing))
+            }
+        } else {
+            listingRestService.getAllByAuthorId(userId).each { listing ->
+                list.add(new LegacyWidget(listing))
+            }
+        }
+        return list
+    }
 
 
     @Path('widget/listUserAndGroupWidgets')
@@ -131,17 +160,12 @@ class LegacyResource {
         MediaType.APPLICATION_JSON,
         MediaType.TEXT_HTML
     ])
-    public Collection<LegacyWidget> getAllWidgets() {
-        Profile currentUser = profileRestService.getCurrentUserProfile()
-        Long userId = currentUser.id
-
-
-        Collection<LegacyWidget> list = new ArrayList<LegacyWidget>()
-        listingRestService.getAllByAuthorId(userId).each { listing ->
-            list.add(new LegacyWidget(listing))
-        }
-
-        return list
+    public Collection<LegacyWidget> getAllWidgets(
+        @QueryParam('widgetName') String widgetName,
+        @QueryParam('widgetVersion') String widgetVersion,
+        @QueryParam('widgetGuid') String widgetGuid
+    ) {
+        findWidgets(widgetName, widgetVersion, widgetGuid)
     }
 
 }

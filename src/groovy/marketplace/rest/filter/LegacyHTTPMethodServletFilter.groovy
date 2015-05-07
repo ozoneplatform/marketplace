@@ -21,6 +21,7 @@ class LegacyHTTPMethodServletFilter implements Filter {
 
         final String method
         private final byte[] payload
+        final String queryString
 
         LegacyHTTPMethodServletRequest(HttpServletRequest request) throws Exception {
             super(request)
@@ -47,6 +48,25 @@ class LegacyHTTPMethodServletFilter implements Filter {
             Reader sourceReader = (this.characterEncoding != null) ?
                 new InputStreamReader(sourceStream, this.characterEncoding) : new InputStreamReader(sourceStream)
             return new BufferedReader(sourceReader)
+        }
+
+        @Override
+        public String getQueryString() {
+            if (this.method == 'GET') {
+                Map<String, String> parameters = this.getParameterMap();
+                String urlParams = ''
+
+                for (Map.Entry<String, String> entry : parameters.entrySet())
+                {
+                    if (entry.getKey() != '_method') {
+                        urlParams += entry.getKey() + '=' + entry.getValue()[0] + '&'
+                    }
+                }
+                return urlParams
+
+            } else {
+                return super.getQueryString()
+            }            
         }
     }
 
