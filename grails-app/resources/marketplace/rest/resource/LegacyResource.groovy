@@ -1,0 +1,171 @@
+package marketplace.rest.resource
+
+import javax.ws.rs.PathParam
+import javax.ws.rs.FormParam
+import javax.ws.rs.QueryParam
+import javax.ws.rs.Path
+import javax.ws.rs.Produces
+import javax.ws.rs.Consumes
+import javax.ws.rs.PUT
+import javax.ws.rs.GET
+import javax.ws.rs.DELETE
+import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
+
+import marketplace.rest.LegacyPreference
+import marketplace.rest.LegacyUser
+import marketplace.rest.LegacyWidget
+
+import marketplace.IwcDataObject
+import marketplace.Profile
+import marketplace.Listing
+
+import marketplace.rest.service.ProfileRestService
+import marketplace.rest.service.ListingRestService
+import marketplace.rest.representation.out.LegacyPreferenceRepresentation
+
+import org.springframework.beans.factory.annotation.Autowired
+
+/**
+ * This class contains endpoints that are a carry-over (interface-wise) from OWF 7.x
+ * and earlier.  These endpoints still need to exist to support OWF 7 widget compatibility.
+ */
+@Path('/api/prefs')
+@Produces([
+    MediaType.APPLICATION_JSON,
+    MediaType.TEXT_HTML
+])
+@Consumes(
+    MediaType.APPLICATION_FORM_URLENCODED
+)
+class LegacyResource {
+
+    @Autowired ProfileRestService profileRestService
+    @Autowired ListingRestService listingRestService
+
+    @Path('/preference/{namespace}/{name}')
+    @PUT
+    public LegacyPreference setPreference(
+            @PathParam('namespace') String namespace,
+            @PathParam('name') String name,
+            @FormParam('value') String value) {
+
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+        String key = namespace + (char) 0x1E + name
+
+        profileRestService.updateDataItem(userId, key, value, 'application/json')
+
+        new LegacyPreference(namespace, name, value, currentUser)
+    }
+
+    @Path('/preference/{namespace}/{name}')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public LegacyPreference getPreference(
+        @PathParam('namespace') String namespace,
+        @PathParam('name') String name) {
+
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+        String key = namespace + (char) 0x1E + name
+
+        IwcDataObject data = profileRestService.getDataItem(userId, key)
+
+        new LegacyPreference(namespace, name, data.entity, currentUser)
+
+    }
+
+    @Path('/preference/{namespace}/{name}')
+    @DELETE
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public LegacyPreference deletePreference(
+        @PathParam('namespace') String namespace,
+        @PathParam('name') String name) {
+
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+        String key = namespace + (char) 0x1E + name
+
+        IwcDataObject data = profileRestService.getDataItem(userId, key)
+        profileRestService.deleteDataItem(userId, key)
+
+        new LegacyPreference(namespace, name, data.entity, currentUser)
+    }
+
+    @Path('/person/whoami')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public LegacyUser getCurrentUser() {
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+
+        new LegacyUser(currentUser)
+    }
+
+    @Path('widget')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public Collection<LegacyWidget> findWidgets(
+        @QueryParam('widgetName') String widgetName,
+        @QueryParam('widgetVersion') String widgetVersion,
+        @QueryParam('widgetGuid') String widgetGuid
+    ) {
+        Collection<LegacyWidget> list = new ArrayList<LegacyWidget>()
+        Profile currentUser = profileRestService.getCurrentUserProfile()
+        Long userId = currentUser.id
+
+        if (widgetName || widgetVersion || widgetGuid) {
+            Collection<Listing> listings = Listing.createCriteria().list() {
+                if (widgetName) {
+                    like('title', widgetName)
+                }
+                if (widgetVersion) {
+                    like('versionName', widgetVersion)
+                }
+                if (widgetGuid) {
+                    like('uuid', widgetGuid)
+                }
+                owners {
+                    eq('id', userId)
+                }
+            }
+
+            listings.each { listing -> 
+                list.add(new LegacyWidget(listing))
+            }
+        } else {
+            listingRestService.getAllByAuthorId(userId).each { listing ->
+                list.add(new LegacyWidget(listing))
+            }
+        }
+        return list
+    }
+
+
+    @Path('widget/listUserAndGroupWidgets')
+    @GET
+    @Produces([
+        MediaType.APPLICATION_JSON,
+        MediaType.TEXT_HTML
+    ])
+    public Collection<LegacyWidget> getAllWidgets(
+        @QueryParam('widgetName') String widgetName,
+        @QueryParam('widgetVersion') String widgetVersion,
+        @QueryParam('widgetGuid') String widgetGuid
+    ) {
+        findWidgets(widgetName, widgetVersion, widgetGuid)
+    }
+
+}

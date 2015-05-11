@@ -71,6 +71,7 @@ public abstract class AbstractRepresentationWriter<T> implements MessageBodyWrit
         AbstractHalRepresentation<T> representation = factory.toRepresentation(
             t, new ApplicationRootUriBuilderHolder(grailsApplication, uriInfo));
 
-        objectMapper.writeValue(entityStream, representation);
+        //don't use objectMapper.writeValue() as it will usually close the stream
+        entityStream.write(objectMapper.writeValueAsBytes(representation));
     }
 }
