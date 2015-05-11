@@ -129,13 +129,13 @@ class LegacyResource {
         if (widgetName || widgetVersion || widgetGuid) {
             Collection<Listing> listings = Listing.createCriteria().list() {
                 if (widgetName) {
-                    eq('title', widgetName)
+                    like('title', widgetName)
                 }
                 if (widgetVersion) {
-                    eq('versionName', widgetVersion)
+                    like('versionName', widgetVersion)
                 }
                 if (widgetGuid) {
-                    eq('uuid', widgetGuid)
+                    like('uuid', widgetGuid)
                 }
                 owners {
                     eq('id', userId)
