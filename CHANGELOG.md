@@ -1,3 +1,32 @@
+### 0.7.8 (2015-05-12)
+
+
+#### Bug Fixes
+
+* **Dependencies:** #66 no longer depend on owfgoss.org infrastructure ([cdf56477](https://github.com/ozone-development/ozp-rest/commit/cdf56477cc88c1fa5128cd2edafab3cd834465a0))
+
+
+#### Features
+
+* **Legacy:**
+  * #43 working findWidgets with or without sql wildcards ([e171aa5d](https://github.com/ozone-development/ozp-rest/commit/e171aa5de8f4368fac02a0778d9d1a3787dac0ff))
+  * findWidgets with config objects working #43 ([5edd79a4](https://github.com/ozone-development/ozp-rest/commit/5edd79a42dff13e70c3542f52f3d9f00022d1d6d))
+  *  working version ([a4974869](https://github.com/ozone-development/ozp-rest/commit/a49748692d2d7f3517667b41882aa1c5b7db836b))
+  * windowname writer for user preference, code cleanup ([b627cdb6](https://github.com/ozone-development/ozp-rest/commit/b627cdb6b34153870eac7b30d9e144336dc58e9f))
+  * get current user ([8c6ffa4c](https://github.com/ozone-development/ozp-rest/commit/8c6ffa4cf8d8e8f00c1f3784b7b3d0ffed47d0ee))
+  * update to correctly formatted JSON ([15a022e2](https://github.com/ozone-development/ozp-rest/commit/15a022e2eee31ea041c95bfcb43c075c62be6b20))
+  * update json for legacy calls ([13e6d08b](https://github.com/ozone-development/ozp-rest/commit/13e6d08b4f1f12843a15ae9e9f7f9d23f988810d))
+  * delete a user preference ([7b6e855d](https://github.com/ozone-development/ozp-rest/commit/7b6e855dc8e3efd34a64dc9063daf1aa944869ca))
+  * getting user preferences ([01c734c3](https://github.com/ozone-development/ozp-rest/commit/01c734c345be086d829fec9f6fbedf48317673ac))
+  * working form urlencoding ([9c0a1a46](https://github.com/ozone-development/ozp-rest/commit/9c0a1a468cc5cf7bb9fda461cde1e3629224af85))
+  * working ([784aa1f9](https://github.com/ozone-development/ozp-rest/commit/784aa1f95eeaaaf434c797d8171140a9147be5c6))
+  * first round of work on setting user preferences ([dee07089](https://github.com/ozone-development/ozp-rest/commit/dee070893a846da9be6006e0bba106df2f42c108))
+  * Windowname transport code improvements ([91922ef3](https://github.com/ozone-development/ozp-rest/commit/91922ef31ffb1b7fc29ddaf5ea7504c5922c992e))
+  * windowname response writer ([3309c456](https://github.com/ozone-development/ozp-rest/commit/3309c4564cb96ba0705ea1be2ad720ab44f5004b))
+  * Switch to servlet filter for _method handling ([17cf5e3e](https://github.com/ozone-development/ozp-rest/commit/17cf5e3eb29019d883802f96d5838bc7761b344a))
+* **legacy:** Initial code for windowname transport ([3401122f](https://github.com/ozone-development/ozp-rest/commit/3401122f936c7e88ecae691a81c06315abda4bf6))
+
+
 ### 0.7.7 (2015-05-05)
 
 
