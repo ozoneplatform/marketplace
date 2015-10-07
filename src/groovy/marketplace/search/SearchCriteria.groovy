@@ -4,6 +4,8 @@ import org.apache.log4j.Logger
 import org.elasticsearch.index.query.QueryBuilder
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.builder.SearchSourceBuilder
+import org.elasticsearch.search.aggregations.AggregationBuilders
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder
 import org.elasticsearch.search.aggregations.AggregationBuilder
 import org.elasticsearch.search.sort.FieldSortBuilder
 import org.elasticsearch.search.sort.ScoreSortBuilder
@@ -216,7 +218,12 @@ class SearchCriteria implements Cloneable, Serializable {
         SearchSourceBuilder source = new SearchSourceBuilder()
 
         addSort(source)
-        addAggregations(source)
+
+        if (aggregations) {
+            TERM_AGGREGATIONS.each { String term -> 
+                source.aggregation(AggregationBuilders.terms("${term}").field("${term}"))
+            }
+        }
 
         return source
     }
@@ -243,14 +250,4 @@ class SearchCriteria implements Cloneable, Serializable {
         }
     }
 
-    def addAggregations(SearchSourceBuilder source) {
-        if(aggregations) {
-            TERM_AGGREGATIONS.each { String term ->        
-                System.err.println("Test:addAggregations"+term)
-                AggregationBuilder aggregationBuilder
-                source.aggregation(aggregationBuilder.terms(term).field("${term}.id").size(DEFAULT_AGGREGATION_SIZE))
-                System.err.println("Test:addAggregations2"+term)
-            }
-        }
-    }
 }

@@ -18,23 +18,16 @@ class SearchableService {
         log.debug 'searchListings:'
 
 
-        def ops = [size: searchCriteria.max,
-                   from: searchCriteria.offset,
-                   types: searchCriteria.TYPES_TO_SEARCH]
+        def ops = [types: searchCriteria.TYPES_TO_SEARCH]
 
         def retry = true
 
         while (retry) {
             try {
-                System.err.println(ops)
-                System.err.println(searchCriteria.searchClause)
-                System.err.println("Test:SearchableService")
-                System.err.println(searchCriteria.extraSearchSource)
-                System.err.println("Test:SearchableServiceEnd")
                 retry = false
-                def results = elasticSearchService.search(ops, searchCriteria.searchClause, searchCriteria.extraSearchSource)
-                System.err.println(results)
+                System.err.println "Extra Search Source: " + searchCriteria.extraSearchSource
 
+                def results = elasticSearchService.search(ops, searchCriteria.searchClause, searchCriteria.extraSearchSource)
                 return results
             }
             catch (QueryParsingException pe) {
