@@ -24,7 +24,7 @@ class SearchCriteria implements Cloneable, Serializable {
 
     static final Collection<String> TYPES_TO_SEARCH = ['marketplace.ServiceItem', 'marketplace.ExtServiceItem']
 
-    static final String[] TERM_AGGREGATIONS = ['types', 'categories', 'agency']
+    static final String[] TERM_AGGREGATIONS = ['types', 'categories', 'agencies']
 
     String sort
     String order = "asc"
@@ -221,7 +221,9 @@ class SearchCriteria implements Cloneable, Serializable {
 
         if (aggregations) {
             TERM_AGGREGATIONS.each { String term -> 
-                source.aggregation(AggregationBuilders.terms("${term}").field("${term}"))
+                source.aggregation(AggregationBuilders.nested("${term}").path("${term}").subAggregation(
+                    AggregationBuilders.terms("id").field("${term}.id").size(DEFAULT_AGGREGATION_SIZE)
+                ))
             }
         }
 

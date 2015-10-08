@@ -1,12 +1,15 @@
 package marketplace
 
+import org.elasticsearch.search.aggregations.bucket.terms.Terms
+
+
 class AggregationsService {
 
     public Map<String, Object> extractAggregationInfo(result) {
         Map<String, Object> returnValue = [:]
 
         if (result.aggregations) {
-            Map<String, Object> aggregations = result.aggregations.asMap()
+            Map<String, Object> aggregations = result.aggregations
             def termCounts
             def rangeCounts
 
@@ -21,51 +24,41 @@ class AggregationsService {
                     }
             ] as Comparator
 
-            System.err.println "Result: " + result
-            System.err.println "Aggregation: " + aggregations
-
-
-
-
             // Currently have separate procedural logic for each type of aggregation returned
             if (aggregations.types) {
-                System.err.println "Aggregation Types: " + aggregations.types
-                termCounts = aggregations.types.buckets
+                termCounts = aggregations.types.getAggregations().id.buckets
                 returnValue['types'] = new TreeMap<Types, Integer>(comparator)
                 termCounts.each { entry ->
-                    Types type = Types.get(Integer.valueOf(entry.term))
-                    System.err.println "Entry: " + entry
-                    SYstem.err.println "Entry Count: " + entry.count
-
-                    returnValue['types'][(type)] = entry.count
+                    Types type = Types.get(Integer.valueOf(entry.getKey()))
+                    returnValue['types'][(type)] = entry.getDocCount()
                 }
             }
 
             if (aggregations.state) {
-                termCounts = aggregations.state.buckets
+                termCounts = aggregations.state.getAggregations().id.buckets
                 returnValue['states'] = new TreeMap<State, Integer>(comparator)
                 termCounts.each { entry ->
-                    State state = State.get(Integer.valueOf(entry.term))
-                    returnValue['states'][(state)] = entry.count
+                    State state = State.get(Integer.valueOf(entry.getKey()))
+                    returnValue['states'][(state)] = entry.getDocCount()
                 }
             }
 
             if (aggregations.categories) {
-                termCounts = aggregations.categories.buckets
+                termCounts = aggregations.categories.getAggregations().id.buckets
                 returnValue['categories'] = new TreeMap<Category, Integer>(comparator)
                 termCounts.each { entry ->
-                    Category category = Category.get(Integer.valueOf(entry.term))
-                    returnValue['categories'][(category)] = entry.count
+                    Category category = Category.get(Integer.valueOf(entry.getKey()))
+                    returnValue['categories'][(category)] = entry.getDocCount()
                 }
             }
 
             // AML-680  agency attribute for a listing - Extract the agency aggregation data
-            if (aggregations.agency) {
-                termCounts = aggregations.agency.buckets
+            if (aggregations.agency) {                
+                termCounts = aggregations.types.getAggregations().id.buckets
                 returnValue['agencies'] = new TreeMap<String, Integer>(comparator)
                 termCounts.each { entry ->
-                    Agency agency = Agency.get(Integer.valueOf(entry.term))
-                    returnValue['agencies'] = entry.count
+                    Agency agency = Agency.get(Integer.valueOf(entry.getKey()))
+                    returnValue['agencies'] = entry.getDocCount()
                 }
             }
 
@@ -117,8 +110,6 @@ class AggregationsService {
                 }
             }
         }
-
-        System.err.println "Return Value: " + returnValue
 
         returnValue
     }

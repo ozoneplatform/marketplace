@@ -25,8 +25,6 @@ class SearchableService {
         while (retry) {
             try {
                 retry = false
-                System.err.println "Extra Search Source: " + searchCriteria.extraSearchSource
-
                 def results = elasticSearchService.search(ops, searchCriteria.searchClause, searchCriteria.extraSearchSource)
                 return results
             }
@@ -40,7 +38,7 @@ class SearchableService {
                 retry = true
             }
             catch (SearchPhaseExecutionException spee) {
-                log.debug "SearchPhaseExecutionException: ${spee.getMessage()}"
+                System.err.println "SearchPhaseExecutionException: ${spee.getMessage()}"
                 throw new IllegalArgumentException()
             }
             catch (Exception e) {

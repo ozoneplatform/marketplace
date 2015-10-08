@@ -53,7 +53,6 @@ class MarketplaceElasticSearchService extends ElasticSearchService {
         search(request, params)
     }
 
-
     def search(SearchRequest request, Map params) {
         resolveIndicesAndTypes(request, params)
         elasticSearchHelper.withElasticSearch { Client client ->
@@ -98,63 +97,12 @@ class MarketplaceElasticSearchService extends ElasticSearchService {
                 result.sort = sortValues
             }
 
-            System.err.println "Response: " + response
-
             if (response.getAggregations()) {
-                System.err.println "Aggregation: " + response.getAggregations().toString()
-                System.err.println "Aggregation Keys: " + response.getAggregations().get("types").toString()
-                System.err.println "Aggregation Type: " + response.getAggregations().type
-
-
-
                 Map<String, Aggregation> aggregations = response.getAggregations().asMap()
                 if (aggregations) {
-                    System.err.println "Aggregations as Map: " + aggregations
                     result.aggregations = aggregations
                 }
-            } 
-            
-
-
-            // if (response.getAggregations()) {
-
-            //     System.err.println "response.getAggregations() = " + response.getAggregations()
-
-            //     result.aggregations = [:]
-
-            //     Terms terms = response.getAggregations().get("keys")
-
-
-            //     InternalAggregations aggregations = response.getAggregations()
-            //     aggregations.aggregationsAsMap().each { entry ->
-            //         def aggregationInfo = new Expando(name: entry.key)
-            //         Aggregation aggregation = entry.value
-            //         aggregationInfo.termCounts = []
-            //         aggregationInfo.rangeCounts = []
-            //         if (aggregation instanceof Terms) {
-            //             aggregationInfo.type = "term"
-            //             aggregationInfo.missing = aggregation.getMissingCount()
-            //             aggregationInfo.total = aggregation.getTotalCount()
-            //             aggregation.getEntries().each { countEntry ->
-            //                 aggregationInfo.termCounts << [term: "${countEntry.getTerm()}", count: countEntry.getCount()]
-            //             }
-            //         } else if (aggregation instanceof Range) {
-            //             (aggregation as Range).getEntries().each { countEntry ->
-            //                 aggregationInfo.type = "range"
-            //                 aggregationInfo.rangeCounts << [from: countEntry.getFrom(), to: countEntry.getTo(), count: countEntry.getCount()]
-            //             }
-            //         } else if (aggregation instanceof Filter)  {
-            //             aggregationInfo.type = "filter"
-            //             aggregationInfo.termCounts << [term: aggregation.getName(), count: aggregation.getCount()]
-            //         }
-
-            //         result.aggregations[(entry.key)] = aggregationInfo
-            //     }
-            // }
-
-
-
-
+            }            
 
             result
         }
