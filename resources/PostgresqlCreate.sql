@@ -2,7 +2,7 @@
 -- Update Database Script
 -- *********************************************************************
 -- Change Log: changelog_master.groovy
--- Ran at: 10/12/15 9:41 AM
+-- Ran at: 10/14/15 12:56 PM
 -- Against: postgres@jdbc:postgresql://localhost:5432/omp
 -- Liquibase version: 2.0.5
 -- *********************************************************************
@@ -1111,57 +1111,52 @@ UPDATE application_configuration SET sub_group_name = 'Partner Store Search' WHE
 
 INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Delete Data, Update Data (x2)', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-6', '2.0.5', '3:d2f31c636d691a47e3d2e8b73cbd66b1', 73);
 
--- Changeset changelog_7.16.0.groovy::7.16.0-7::marketplace::(Checksum: 3:027bd76dec2ca88af0145b25dfc00c93)
-ALTER TABLE "U_DOMAIN_preferences" RENAME TO u_domain_preferences;
-
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Rename Table', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-7', '2.0.5', '3:027bd76dec2ca88af0145b25dfc00c93', 74);
-
 -- Changeset changelog_7.16.0.groovy::7.16.0-8::marketplace::(Checksum: 3:54b5f1e34983065c4273b232dece1777)
 ALTER TABLE owf_properties ADD mobile_ready BOOLEAN NOT NULL DEFAULT FALSE;
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Add Column', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-8', '2.0.5', '3:54b5f1e34983065c4273b232dece1777', 75);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Add Column', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-8', '2.0.5', '3:54b5f1e34983065c4273b232dece1777', 74);
 
 -- Changeset changelog_7.16.0.groovy::7.16.0-9::marketplace::(Checksum: 3:2337d16fb8f4bbd2ea73b9c3a830c68f)
 UPDATE application_configuration SET type = 'String' WHERE type = 'string';
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-9', '2.0.5', '3:2337d16fb8f4bbd2ea73b9c3a830c68f', 76);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-9', '2.0.5', '3:2337d16fb8f4bbd2ea73b9c3a830c68f', 75);
 
 -- *********************************************************************
 -- SQL to add all changesets to database history table
 -- *********************************************************************
 -- Change Log: changelog_master.groovy
--- Ran at: 10/12/15 9:42 AM
+-- Ran at: 10/14/15 12:57 PM
 -- Against: postgres@jdbc:postgresql://localhost:5432/omp
 -- Liquibase version: 2.0.5
 -- *********************************************************************
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Transfer rating information into the item_comment table', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-5', '2.0.5', '3:3688cbd797cb6cde3827130aa74d1903', 270);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Transfer rating information into the item_comment table', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-5', '2.0.5', '3:3688cbd797cb6cde3827130aa74d1903', 267);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Compute number of votes for each rating for the service items', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-6', '2.0.5', '3:9ed670c788094838125b3045c42f6fce', 271);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Compute number of votes for each rating for the service items', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-6', '2.0.5', '3:9ed670c788094838125b3045c42f6fce', 268);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Transfer approved date information into the service_item table', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-13', '2.0.5', '3:6efbf9a22068bcab382bc6a466bf40ae', 272);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Transfer approved date information into the service_item table', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-13', '2.0.5', '3:6efbf9a22068bcab382bc6a466bf40ae', 269);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Set the section for existing cfds to typeProperties', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-17', '2.0.5', '3:ce25f8b65d80c3e960d0883264d5206f', 273);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Set the section for existing cfds to typeProperties', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_5.0.groovy', '5.0-17', '2.0.5', '3:ce25f8b65d80c3e960d0883264d5206f', 270);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data (x3)', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-7', '2.0.5', '3:b337838d37b361db713c9fcfad1af557', 274);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data (x3)', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-7', '2.0.5', '3:b337838d37b361db713c9fcfad1af557', 271);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data (x2)', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-9', '2.0.5', '3:8386d1edefea8f79361809de2eea6608', 275);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data (x2)', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-9', '2.0.5', '3:8386d1edefea8f79361809de2eea6608', 272);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Create a record in service_item_profile table for each service item linking it with its owner.', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-13', '2.0.5', '3:3658ca8cb6ad5d02fc45644d4a37a38b', 276);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Create a record in service_item_profile table for each service item linking it with its owner.', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-13', '2.0.5', '3:3658ca8cb6ad5d02fc45644d4a37a38b', 273);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Create a record in service_item_tech_pocs table for each service item linking it with its technical POC.', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-17', '2.0.5', '3:ff31dc39fa460d736a824986b06ed8e2', 277);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Create a record in service_item_tech_pocs table for each service item linking it with its technical POC.', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-17', '2.0.5', '3:ff31dc39fa460d736a824986b06ed8e2', 274);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Create a record in service_item_documentation_url table for each service item linking it with its technical POC.', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-18', '2.0.5', '3:7daee389a18729b712930a71f89bb6f9', 278);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Create a record in service_item_documentation_url table for each service item linking it with its technical POC.', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.3.0.groovy', '7.3.0-18', '2.0.5', '3:7daee389a18729b712930a71f89bb6f9', 275);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL (x2)', 'EXECUTED', 'changelog_7.5.0.groovy', '7.5.0-2', '2.0.5', '3:20ee7d13d6531fc2e7883160b0e3a8d2', 279);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL (x2)', 'EXECUTED', 'changelog_7.5.0.groovy', '7.5.0-2', '2.0.5', '3:20ee7d13d6531fc2e7883160b0e3a8d2', 276);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data', 'EXECUTED', 'changelog_7.10.0.groovy', '7.10.0-4', '2.0.5', '3:8554bf7cdf0efcf8fe8105bb50d3dd30', 280);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data', 'EXECUTED', 'changelog_7.10.0.groovy', '7.10.0-4', '2.0.5', '3:8554bf7cdf0efcf8fe8105bb50d3dd30', 277);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'create temporary table to hold change detail information while the tables are modified', NOW(), 'Create Table, Custom SQL (x3)', 'EXECUTED', 'changelog_7.11.0.groovy', '7.11.0-1', '2.0.5', '3:1edfcd293610d3a2f803bae919b9826d', 281);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'create temporary table to hold change detail information while the tables are modified', NOW(), 'Create Table, Custom SQL (x3)', 'EXECUTED', 'changelog_7.11.0.groovy', '7.11.0-1', '2.0.5', '3:1edfcd293610d3a2f803bae919b9826d', 278);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.11.0.groovy', '7.11.0-3', '2.0.5', '3:400733a9dc22034bcb0b8b8e411e55b2', 282);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL', 'EXECUTED', 'changelog_7.11.0.groovy', '7.11.0-3', '2.0.5', '3:400733a9dc22034bcb0b8b8e411e55b2', 279);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-3', '2.0.5', '3:f1f70bdbd696fdb464ebe75521269059', 283);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-3', '2.0.5', '3:f1f70bdbd696fdb464ebe75521269059', 280);
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-4', '2.0.5', '3:e0aa28a5c3bb94e98ae4195dfa54d632', 284);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data', 'EXECUTED', 'changelog_7.16.0.groovy', '7.16.0-4', '2.0.5', '3:e0aa28a5c3bb94e98ae4195dfa54d632', 281);
 

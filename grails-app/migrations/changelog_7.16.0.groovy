@@ -79,7 +79,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: 'marketplace', dbms: 'mssql, mysql, postgresql, hsqldb, oracle', id: '7.16.0-7', context: 'create, 7.16.0') {
+    changeSet(author: 'marketplace', dbms: 'mssql, mysql, hsqldb', id: '7.16.0-7', context: 'create, 7.16.0') {
         renameTable(oldTableName: 'U_DOMAIN_preferences', newTableName: 'u_domain_preferences')
     }
 
