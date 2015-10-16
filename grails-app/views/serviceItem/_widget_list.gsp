@@ -35,7 +35,7 @@
     <div class="widget_paging_sorting_listing bootstrap-active">
                 
         <g:if test="${tagSearch}">
-            <div class="search_results_title_tag">${tagTitle}
+            <div class="search_results_title_tag">${tagTitle.substring(1, tagTitle.length() - 1)} 
         </g:if>
         <g:else>
             <div class="search_results_title">
