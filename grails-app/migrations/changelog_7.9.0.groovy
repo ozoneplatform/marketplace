@@ -111,7 +111,7 @@ databaseChangeLog = {
         addForeignKeyConstraint(baseColumnNames: "service_item_id", baseTableName: "contact", constraintName: "FK38B72420C7E5C662", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "service_item", referencesUniqueColumn: "false")
     }
 
-    changeSet(author: 'marketplace', dbms: 'mssql, mysql, postgresql, hsqldb', id: '7.9.0-4', context: 'create, 7.9.0') {
+    changeSet(author: 'marketplace', dbms: 'mssql, mysql, postgresql, oracle, hsqldb', id: '7.9.0-4', context: 'create, 7.9.0') {
         createIndex(indexName: "title_unique_1389723125532", tableName: "contact_type", unique: "true") {
             column(name: "title")
         }

@@ -46,6 +46,8 @@ databaseChangeLog = {
     property([name:"marketplace.legacyIdField", value:"numeric(19,0)", dbms:"mssql"])
     property([name:"appconfig.valColumn", value:"VALUE", dbms:"hsqldb"])
     property([name:"appconfig.valColumn", value:"value", dbms:"mysql, oracle, postgresql, mssql, h2"])
+	property([name:"currentDateFunction", value:"SYSTIMESTAMP", dbms:"oracle"])
+	property([name:"currentDateFunction", value:"NOW()", dbms:"mysql, postgresql, mssql, h2"])
 
 
     includeChangelogs('changelog')
