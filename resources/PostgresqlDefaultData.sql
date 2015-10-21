@@ -2,7 +2,7 @@
 -- Update Database Script
 -- *********************************************************************
 -- Change Log: changelog_master.groovy
--- Ran at: 10/14/15 12:56 PM
+-- Ran at: 10/21/15 7:40 AM
 -- Against: postgres@jdbc:postgresql://localhost:5432/omp
 -- Liquibase version: 2.0.5
 -- *********************************************************************
@@ -13,35 +13,134 @@ ALTER TABLE category ALTER COLUMN id SET DEFAULT nextval('hibernate_sequence');
 
 INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', 'Ensure that the category table has auto-incrementing ids', NOW(), 'Custom SQL', 'EXECUTED', 'default_data.groovy', 'defaultData-1', '2.0.5', '3:8a72896a119302a682eebcb0ab45c9f5', 170);
 
--- Changeset default_data.groovy::defaultData-2::marketplace::(Checksum: 3:e6f8e4784572dabe24ccd980d7113da2)
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Example Category A', '2015-10-14 12:57:02', 'Category A', '30c9d9c3-5e44-491d-9de8-f5ad239f795b', 0);
+-- Changeset default_data.groovy::defaultData-2::marketplace::(Checksum: 3:1ecfbd2147a02d93cf462ad7ef305499)
+UPDATE category SET description = 'Example Category A' WHERE title = 'Category A';
 
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Example Category B', '2015-10-14 12:57:02', 'Category B', '8f2ee0a8-781d-4fdd-bdab-9ef6ef35b5de', 0);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Category A', 'Example Category A', 0,
+                        '3f2c046e-8128-457f-8da9-df81730c150a', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Category A'
+                    );
 
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Example Category C', '2015-10-14 12:57:02', 'Category C', '75cfb2e6-0a34-47f7-a762-525785a5783e', 0);
+UPDATE category SET description = 'Example Category B' WHERE title = 'Category B';
 
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Analytics based on geographic data', '2015-10-14 12:57:02', 'Geospatial', '69184cfc-8413-4a62-b911-ec5950137170', 0);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Category B', 'Example Category B', 0,
+                        'cb0c4d15-1646-4a3f-a22e-5227a114acfa', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Category B'
+                    );
 
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Data set retrieval', '2015-10-14 12:57:02', 'Query', 'a336e57d-e67b-421d-8b0f-575b81cd0371', 0);
+UPDATE category SET description = 'Example Category C' WHERE title = 'Category C';
 
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Data set summarization', '2015-10-14 12:57:02', 'Reporting', 'a8702b49-b4ac-4aeb-aab9-7602f5c49543', 0);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Category C', 'Example Category C', 0,
+                        '7f36aa76-6a55-485b-b22b-53088eed37c1', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Category C'
+                    );
 
-INSERT INTO category (created_date, description, edited_date, title, uuid, "version") VALUES ('2015-10-14 12:57:02', 'Amaltics based on temporal data', '2015-10-14 12:57:02', 'Temporal', '5f06523a-c1b0-43b2-a6c8-6b6648cd1de9', 0);
+UPDATE category SET description = 'Analytics based on geographic data' WHERE title = 'Geospatial';
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Insert Row (x7)', 'EXECUTED', 'default_data.groovy', 'defaultData-2', '2.0.5', '3:e6f8e4784572dabe24ccd980d7113da2', 171);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Geospatial', 'Analytics based on geographic data', 0,
+                        'a3503cd1-5e96-414c-9540-168dceba5aaf', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Geospatial'
+                    );
 
--- Changeset default_data.groovy::defaultData-5::marketplace::(Checksum: 3:580077db56edb8239df6b3399f2f3df0)
-INSERT INTO score_card_item (created_date, description, edited_date, image, question, show_on_listing, "version") VALUES ('2015-10-14 12:57:02', 'In order to satisfy this criterion, the application must be supported with Tier 1 support so that users can access help for any arising issues.', '2015-10-14 12:57:02', '/marketplace/themes/common/images/scorecard/ScorecardIcons_EMS_lrg.png', 'Is Enterprise Management System (EMS) part of the support structure?', TRUE, 0);
+UPDATE category SET description = 'Data set retrieval' WHERE title = 'Query';
 
-INSERT INTO score_card_item (created_date, description, edited_date, image, question, show_on_listing, "version") VALUES ('2015-10-14 12:57:02', 'In order to satisfy this criterion, the application must be running within the cloud structure. If an application is made up of multiple parts, all parts must be running within the cloud.', '2015-10-14 12:57:02', '/marketplace/themes/common/images/scorecard/ScorecardIcons_CloudHost_lrg.png', 'Is the application hosted within the infrastructure of the cloud?', TRUE, 0);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Query', 'Data set retrieval', 0,
+                        'df2dbf01-dd02-425f-8123-fd8a8aa0a661', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Query'
+                    );
 
-INSERT INTO score_card_item (created_date, description, edited_date, image, question, show_on_listing, "version") VALUES ('2015-10-14 12:57:02', 'In order to satisfy this criterion, the application must be able to dynamically handle how many users are trying to access it. For instance, if a low number of users are accessing the App Component a small number of resources are used; if a large number of users are accessing the App Component, the App Component scales to take advantage of additional resources in the cloud.', '2015-10-14 12:57:02', '/marketplace/themes/common/images/scorecard/ScorecardIcons_Scale_lrg.png', 'Does the application elastically scale?', TRUE, 0);
+UPDATE category SET description = 'Data set summarization' WHERE title = 'Reporting';
 
-INSERT INTO score_card_item (created_date, description, edited_date, image, question, show_on_listing, "version") VALUES ('2015-10-14 12:57:02', 'In order to satisfy this criterion, the system should operate without constraining the user to interact with it.', '2015-10-14 12:57:02', '/marketplace/themes/common/images/scorecard/ScorecardIcons_LicenseFree_lrg.png', 'Does this system operate without license constraints?', TRUE, 0);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Reporting', 'Data set summarization', 0,
+                        '4d06d8b0-d052-4c58-8e89-72fcefd9b5f4', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Reporting'
+                    );
 
-INSERT INTO score_card_item (created_date, description, edited_date, image, question, show_on_listing, "version") VALUES ('2015-10-14 12:57:02', 'In order to satisfy this criterion, the application''''s data must be within cloud storage. If an application utilizes multiple data resources, all parts must utilize cloud storage.', '2015-10-14 12:57:02', '/marketplace/themes/common/images/scorecard/ScorecardIcons_CloudStorage_lrg.png', 'Is the application data utilizing cloud storage?', TRUE, 0);
+UPDATE category SET description = 'Amaltics based on temporal data' WHERE title = 'Temporal';
 
-INSERT INTO score_card_item (created_date, description, edited_date, image, question, show_on_listing, "version") VALUES ('2015-10-14 12:57:02', 'In order to satisfy this criterion, the application must be accessible via an URL/URI that can be launched by a web browser.', '2015-10-14 12:57:02', '/marketplace/themes/common/images/scorecard/ScorecardIcons_Browser_lrg.png', 'Is the application accessible through a web browser?', TRUE, 0);
+INSERT INTO category (title, description, version, uuid, created_date, edited_date)
+                    SELECT DISTINCT 'Temporal', 'Amaltics based on temporal data', 0,
+                        '35620f14-5e19-477f-b927-61a66b3ab05c', NOW(),
+                        NOW()
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM category
+                        WHERE title = 'Temporal'
+                    );
 
-INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Insert Row (x6)', 'EXECUTED', 'default_data.groovy', 'defaultData-5', '2.0.5', '3:580077db56edb8239df6b3399f2f3df0', 172);
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Update Data, Custom SQL, Update Data, Custom SQL, Update Data, Custom SQL, Update Data, Custom SQL, Update Data, Custom SQL, Update Data, Custom SQL, Update Data, Custom SQL', 'EXECUTED', 'default_data.groovy', 'defaultData-2', '2.0.5', '3:1ecfbd2147a02d93cf462ad7ef305499', 171);
+
+-- Changeset default_data.groovy::defaultData-5::marketplace::(Checksum: 3:22e926834c3186c78e3e41d88453452b)
+INSERT INTO score_card_item (question, description, image, version, created_date, edited_date, show_on_listing)
+                    SELECT DISTINCT 'Is Enterprise Management System (EMS) part of the support structure?', 'In order to satisfy this criterion, the application must be supported with Tier 1 support so that users can access help for any arising issues.', '/marketplace/themes/common/images/scorecard/ScorecardIcons_EMS_lrg.png', 0,
+                        NOW(), NOW(), true
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM score_card_item
+                        WHERE question = 'Is Enterprise Management System (EMS) part of the support structure?'
+                    );
+
+INSERT INTO score_card_item (question, description, image, version, created_date, edited_date, show_on_listing)
+                    SELECT DISTINCT 'Is the application hosted within the infrastructure of the cloud?', 'In order to satisfy this criterion, the application must be running within the cloud structure. If an application is made up of multiple parts, all parts must be running within the cloud.', '/marketplace/themes/common/images/scorecard/ScorecardIcons_CloudHost_lrg.png', 0,
+                        NOW(), NOW(), true
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM score_card_item
+                        WHERE question = 'Is the application hosted within the infrastructure of the cloud?'
+                    );
+
+INSERT INTO score_card_item (question, description, image, version, created_date, edited_date, show_on_listing)
+                    SELECT DISTINCT 'Does the application elastically scale?', 'In order to satisfy this criterion, the application must be able to dynamically handle how many users are trying to access it. For instance, if a low number of users are accessing the App Component a small number of resources are used; if a large number of users are accessing the App Component, the App Component scales to take advantage of additional resources in the cloud.', '/marketplace/themes/common/images/scorecard/ScorecardIcons_Scale_lrg.png', 0,
+                        NOW(), NOW(), true
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM score_card_item
+                        WHERE question = 'Does the application elastically scale?'
+                    );
+
+INSERT INTO score_card_item (question, description, image, version, created_date, edited_date, show_on_listing)
+                    SELECT DISTINCT 'Does this system operate without license constraints?', 'In order to satisfy this criterion, the system should operate without constraining the user to interact with it.', '/marketplace/themes/common/images/scorecard/ScorecardIcons_LicenseFree_lrg.png', 0,
+                        NOW(), NOW(), true
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM score_card_item
+                        WHERE question = 'Does this system operate without license constraints?'
+                    );
+
+INSERT INTO score_card_item (question, description, image, version, created_date, edited_date, show_on_listing)
+                    SELECT DISTINCT 'Is the application data utilizing cloud storage?', 'In order to satisfy this criterion, the application''s data must be within cloud storage. If an application utilizes multiple data resources, all parts must utilize cloud storage.', '/marketplace/themes/common/images/scorecard/ScorecardIcons_CloudStorage_lrg.png', 0,
+                        NOW(), NOW(), true
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM score_card_item
+                        WHERE question = 'Is the application data utilizing cloud storage?'
+                    );
+
+INSERT INTO score_card_item (question, description, image, version, created_date, edited_date, show_on_listing)
+                    SELECT DISTINCT 'Is the application accessible through a web browser?', 'In order to satisfy this criterion, the application must be accessible via an URL/URI that can be launched by a web browser.', '/marketplace/themes/common/images/scorecard/ScorecardIcons_Browser_lrg.png', 0,
+                        NOW(), NOW(), true
+                    FROM application_configuration
+                    WHERE NOT EXISTS (SELECT id FROM score_card_item
+                        WHERE question = 'Is the application accessible through a web browser?'
+                    );
+
+INSERT INTO databasechangelog (AUTHOR, COMMENTS, DATEEXECUTED, DESCRIPTION, EXECTYPE, FILENAME, ID, LIQUIBASE, MD5SUM, ORDEREXECUTED) VALUES ('marketplace', '', NOW(), 'Custom SQL (x6)', 'EXECUTED', 'default_data.groovy', 'defaultData-5', '2.0.5', '3:22e926834c3186c78e3e41d88453452b', 172);
 
