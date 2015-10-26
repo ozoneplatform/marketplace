@@ -23,18 +23,33 @@ class QueryStringPredicate extends SingleValuePredicate {
     def getSearchClause() {
         def includeComments = this.includeComments
         def expandedQueryString = getExpandedQueryString(singleValue)
+        System.err.println 'Expanded Query String: ' + expandedQueryString
+        def values = expandedQueryString?.split(':')
+        System.err.println 'values: ' + values
         return {
             if (includeComments) {
+                System.err.println 'HELLO'
                 should {
                     query_string(default_field: "itemComments.text", query: expandedQueryString)
                 }
                 should {
                     query_string(default_field: this.indexFieldName, query: expandedQueryString ?: '*')
                 }
+
             } else {
+                System.err.println 'HELLO'
                 must {
-                    query_string(default_field: this.indexFieldName, query: expandedQueryString ?: '*')
+                    nested {
+                        path = 'tags.tag'
+                        query {
+                            query_string(query: expandedQueryString ?: '*')
+                        }           
+                    }
                 }
+            // } else {
+            //     must {
+            //         query_string(default_field: this.indexFieldName, query: expandedQueryString ?: '*')
+            //     }
             }
         }
     }
@@ -47,10 +62,9 @@ class QueryStringPredicate extends SingleValuePredicate {
      */
     String getExpandedQueryString(String originalString) {
         if (originalString?.contains(':')) {
-
-            return originalString.replaceAll(/[\w]+:[\w]+/,
+            return originalString.replaceAll(/[\w\.]+:[\w\.]+/,
                     {
-                        def matcher = it =~ /([\w]+):([\w]+)/
+                        def matcher = it =~ /([\w\.]+):([\w\.]+)/
                         if (matcher) {
                             String fieldName = matcher[0][1]
                             String fieldValue = matcher[0][2]

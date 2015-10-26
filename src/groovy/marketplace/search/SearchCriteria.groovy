@@ -101,7 +101,6 @@ class SearchCriteria implements Cloneable, Serializable {
      */
     def addSearch(String field, String val) {
         log.info "OP-3759: addSearch $field, $val"
-
         if (this.predicateMap[(field)] && this.predicateMap[(field)] instanceof MultiValuePredicate) {
             MultiValuePredicate multiValueFilter = this.predicateMap[(field)]
             multiValueFilter.addValue(val)
@@ -147,6 +146,9 @@ class SearchCriteria implements Cloneable, Serializable {
         List<Predicate> allPredicates = predicateMap.values().toList()
         List<Predicate> filters = allPredicates.findAll {it.isFilter()}
         List<Predicate> queries = allPredicates - filters
+
+        System.err.println 'Queries: ' + queries.dump()
+        queries.each { System.err.println "Query: $it" }
 
         def result
         if (allPredicates) {
