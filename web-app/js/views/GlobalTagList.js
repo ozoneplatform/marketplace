@@ -32,7 +32,7 @@ function (TagsCollection, Backbone, Handlebars, _, $) {
         );
 
     function tagSearchUrl (tagTitle) {
-        return Marketplace.context + '/serviceItem/search?queryString=' + encodeURIComponent('tags.tag.title:' + tagTitle + '');
+        return Marketplace.context + '/serviceItem/search?queryString=' + encodeURIComponent('tags.tag.title:"' + tagTitle + '"');
     }
 
     function tagSortByTitle (tag) {

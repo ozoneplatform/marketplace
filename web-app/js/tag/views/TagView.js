@@ -18,7 +18,7 @@ function(BaseView, Backbone, Handlebars, $, _, Marketplace) {
     var SuperClass = BaseView;
 
     function tagSearchUrl (tagTitle) {
-        return Marketplace.context + '/serviceItem/search?queryString="' + encodeURIComponent('tags.tag.title:' + tagTitle + '"');
+        return Marketplace.context + '/serviceItem/search?queryString=' + encodeURIComponent('tags.tag.title:"' + tagTitle + '"');
     }
 
     return SuperClass.extend({

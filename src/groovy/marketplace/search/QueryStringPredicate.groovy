@@ -23,33 +23,28 @@ class QueryStringPredicate extends SingleValuePredicate {
     def getSearchClause() {
         def includeComments = this.includeComments
         def expandedQueryString = getExpandedQueryString(singleValue)
-        System.err.println 'Expanded Query String: ' + expandedQueryString
-        def values = expandedQueryString?.split(':')
-        System.err.println 'values: ' + values
         return {
             if (includeComments) {
-                System.err.println 'HELLO'
                 should {
                     query_string(default_field: "itemComments.text", query: expandedQueryString)
                 }
                 should {
                     query_string(default_field: this.indexFieldName, query: expandedQueryString ?: '*')
                 }
-
-            } else {
-                System.err.println 'HELLO'
+            } else if (expandedQueryString?.contains('.')) {
+                String queryPath = expandedQueryString.substring(0, expandedQueryString.split(':')[0].lastIndexOf('.'))
                 must {
                     nested {
-                        path = 'tags.tag'
+                        path = "$queryPath"
                         query {
                             query_string(query: expandedQueryString ?: '*')
-                        }           
+                        }
                     }
                 }
-            // } else {
-            //     must {
-            //         query_string(default_field: this.indexFieldName, query: expandedQueryString ?: '*')
-            //     }
+            } else {
+                must {
+                    query_string(default_field: this.indexFieldName, query: expandedQueryString ?: '*')
+                }
             }
         }
     }

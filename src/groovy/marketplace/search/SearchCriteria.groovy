@@ -146,10 +146,6 @@ class SearchCriteria implements Cloneable, Serializable {
         List<Predicate> allPredicates = predicateMap.values().toList()
         List<Predicate> filters = allPredicates.findAll {it.isFilter()}
         List<Predicate> queries = allPredicates - filters
-
-        System.err.println 'Queries: ' + queries.dump()
-        queries.each { System.err.println "Query: $it" }
-
         def result
         if (allPredicates) {
             result = {
