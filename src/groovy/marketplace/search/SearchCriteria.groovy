@@ -101,7 +101,6 @@ class SearchCriteria implements Cloneable, Serializable {
      */
     def addSearch(String field, String val) {
         log.info "OP-3759: addSearch $field, $val"
-
         if (this.predicateMap[(field)] && this.predicateMap[(field)] instanceof MultiValuePredicate) {
             MultiValuePredicate multiValueFilter = this.predicateMap[(field)]
             multiValueFilter.addValue(val)
@@ -145,35 +144,18 @@ class SearchCriteria implements Cloneable, Serializable {
      */
     def getSearchClause() {
         List<Predicate> allPredicates = predicateMap.values().toList()
-        List<Predicate> filters = allPredicates.findAll {it.isFilter()}
-        List<Predicate> queries = allPredicates - filters
-
-        def result
+        def result 
         if (allPredicates) {
             result = {
                 filtered {
-                    if (queries) {
-                        filter {
-                            query {
-                                bool {
-                                    queries.each { Predicate query ->
-                                        Closure searchClause = (Closure) query.getSearchClause()
-                                        searchClause.delegate = delegate.delegate
-                                        searchClause()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (filters) {
-                        filter {
-                            query {
-                                bool {
-                                    filters.each { Predicate filter ->
-                                        Closure searchClause = (Closure) filter.getSearchClause()
-                                        searchClause.delegate = delegate.delegate
-                                        searchClause()
-                                    }
+                    filter {
+                        query {
+                            bool {
+                                allPredicates.each { Predicate query ->
+                                    Closure searchClause = (Closure) query.getSearchClause()
+                                    searchClause.delegate = delegate.delegate
+                                    searchClause()
+
                                 }
                             }
                         }
@@ -189,6 +171,7 @@ class SearchCriteria implements Cloneable, Serializable {
                 }
             }
         }
+
         result
     }
 
