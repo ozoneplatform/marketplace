@@ -10,7 +10,7 @@ Fork the code for this repository. Make your changes and submit a pull request. 
 The OZONE Marketplace, similar to a commercial application store like Apple’s App Store or the Google Chrome Web Store, operates as a thin-client registry of applications and services. It enables users to create, browse, download and use a variety of applications or software components known as listings. Listings can be App Components, OZONE Apps, plugins, REST & SOAP services, Web apps, and more. 
 While the Store can operate independently, using it with OWF provides users with one location for everything they need to do their jobs, from searching and discovering new tools, to starting and managing those tools or building their own workflows. 
 
-##Summary of Repo Marketplace shares with OWF:
+## Summary of Repo Marketplace shares with OWF:
  - [omp-marketplace](https://github.com/ozoneplatform/omp-marketplace): the master Marketplace branch
  - [owf-appconfig](https://github.com/ozoneplatform/owf-appconfig): Grails plugin for front-end and back-end configuration
  - [owf-auditing](https://github.com/ozoneplatform/owf-auditing): Common Event Format (CEF) logging plugin
@@ -32,7 +32,7 @@ While the Store can operate independently, using it with OWF provides users with
 **Scorecard Feature**
 
 
-##DEPENDENCY & DEPENDENCY MODIFICATIONS
+## DEPENDENCY & DEPENDENCY MODIFICATIONS
 Marketplace uses a modified the Audit Trail Plugin File. It is a version of the Audit Trail library
 (http://grails.org/plugin/audit-trail). The change was made to AuditStampASTTransformation.java.
 
@@ -56,13 +56,11 @@ Released under the [Apache License, Version 2](http://www.apache.org/licenses/LI
  
 ## Community
 
-[Support Guidance] (https://github.com/ozoneplatform/owf-framework/wiki/Support-Guidance): Provides information about resources including related projects.
+[Support Guidance](https://github.com/ozoneplatform/owf-framework/wiki/Support-Guidance): Provides information about resources including related projects.
 
 ### Google Group
 
 [ozoneplatform-users](https://groups.google.com/forum/?fromgroups#!forum/ozoneplatform-users): This list is for users, for questions about the platform, for feature requests, for discussions about the platform and its roadmap, etc.
-
-[Support Guidance] (https://github.com/ozoneplatform/owf-framework/wiki/Support-Guidance) : Provides information about resources including related projects.
  
 ### OWF GOSS Board
 OWF started as a project at a single US Government agency, but developed into a collaborative project spanning multiple federal agencies.  Overall project direction is managed by "The OWF Government Open Source Software Board"; i.e. what features should the core team work on next, what patches should get accepted, etc.  Gov't agencies wishing to be represented on the board should check http://owfgoss.org for more details.  Membership on the board is currently limited to Government agencies that are using OWF and have demonstrated willingness to invest their own energy and resources into developing it as a shared resource of the community.  At this time, the board is not considering membership for entities that are not US Government Agencies, but we would be willing to discuss proposals.
@@ -77,6 +75,6 @@ Contributions from government agencies do not need to have a CLA on file, but do
  
 Government agencies are encouraged to submit contributions as pull requests on GitHub.  If your agency cannot use GitHub, contributions can be emailed as patches to goss-support@owfgoss.org.
 
-###Related projects
+### Related projects
 The OZONE Widget Framework (OWF) is a sister project to Marketplace. [OWF] (https://github.com/ozoneplatform/owf-framework) is a framework that allows data from different servers to communicate inside a browser window without sending information back to the respective servers. This unique capability allows the OWF web portal to offer decentralized data manipulation. It includes a secure, in-browser, pub-sub eventing system which allows widgets from different domains to share information. The combination of decentralized content and in-browser messaging makes OWF particularly suited for large distributed enterprises with legacy stovepipes that need to combine capability. Use it to quickly link applications and make composite tools.
  
