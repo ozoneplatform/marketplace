@@ -17,7 +17,8 @@ class ServiceItemTag implements Serializable, ToJSON {
     static searchable = {
         root false
         tag component: true, excludeFromAll: false
-        only = ['tag']
+        createdBy component: true, excludeFromAll: true
+        only = ['tag', 'createdBy']
     }
 
     static mapping = {
